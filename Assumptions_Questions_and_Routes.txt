@@ -1,0 +1,31 @@
+Assumptions:
+- Roles are already enforced. (customer isn't allowed to view other customer data, etc.)
+- Auto-incrementing new Agent & Customer IDs would be handled by DB. However, for these purposes, I included a semi hack-y alternative that finds the max ID and adds 1.
+- For Customer city & state, it's assumed all address data is uniform for parsing those fields. If not, I would look up city & state by latitude and longitude.
+
+Questions/Comments for PM:
+- For updating agents & customers, PATCH (vs PUT) would be a better option to decrease bandwidth, but would require using a better data source (DB) than JSON files.
+- For larger datasets, utilize caching.
+
+To install: npm install
+To Run: node app.js
+Server endpoint: http://localhost:3000/
+Post & Put data content-type = x-www-form-urlencoded
+
+Routes:
+Agent List Page
+  - Return List of All Agents: GET http://localhost:3000/agents
+  - Add New Agent: POST http://localhost:3000/agents
+
+Agent Detail Page
+  - Retrieve all Agent Details by Agent's ID: GET http://localhost:3000/agents/:agentId
+  - Update Agent by ID: PUT http://localhost:3000/agents/:agentId
+
+Agent's Customer List View Page
+  - List all customers associated with a given Agent's ID: GET http://localhost:3000/agents/:agentId/customers
+  - Add new customer: POST http://localhost:3000/agents/:agentId/customers
+  - Delete existing customer: DELETE http://localhost:3000/agents/:agentId/customers/:customerId
+
+Agent's Customer Detail Page
+  - Return all customer data from our system: GET http://localhost:3000/agents/:agentId/customers/:customerId
+  - Update customer: PUT http://localhost:3000/agents/:agentId/customers/:customerId
